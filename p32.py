@@ -60,11 +60,18 @@ def computePartC(N):
         return "1"
 
     k = 2
-    while(k <= (math.log(2, N) // 1)):
-        if powerOfNumberRecursive(k, N):
-            return "1"
+    #print(math.log(N, 2))
+    #print(k <= (math.log(10, N) // 1))
+    while(k <= (math.log(N, 2) // 1)):
 
-    return recursivePartC(1, N, N, k)
+        result = recursivePartC(1, N, N, k)
+        if recursivePartC(1, N, N, k):#(N ** k) == N:#powerOfNumberRecursive(k, N):
+            return result
+        k = k + 1
+        print(k)
+    print()
+    print(k)
+    #return recursivePartC(1, N, N, k)
 
 # assume l = 1 first time being called
 def recursivePartC(l, u, N, k):
@@ -96,6 +103,6 @@ def recursivePartC(l, u, N, k):
 
 def main():
     N =	int(input("Enter a value for N: "))
-    print(computePartA(N))
+    print(computePartC(N))
 
 main()
