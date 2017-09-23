@@ -86,12 +86,12 @@ def recursivePartC(l, u, N, k):
     # If N is not a square, increment value of l
     elif( N > pow(mid, k) ):
 
-        return recursivePartA(mid + 1, u, N)
+        return recursivePartC(mid + 1, u, N)
 
     # If N is not a square, increment value of u
     elif( N < pow(mid, k) ):
 
-        return recursivePartA(l, mid - 1, N)
+        return recursivePartC(l, mid - 1, N)
     
 
 def main():
