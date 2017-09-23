@@ -25,5 +25,4 @@ def main():
     N =	input("Enter a value for N: ")
     compute(l, N)
 
-
-
+main()
