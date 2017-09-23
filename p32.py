@@ -6,7 +6,7 @@ def compute(l, N):
     while( l <= N ):
         mid = math.floor(l+N/2)
         # Check to see if the given numbre is a square of middle             
-        if( mid*mid == square ):
+        if( mid*mid == N ):
             print(N)
             return 0
         # If N is not a square, increment value of l                         
@@ -21,8 +21,8 @@ def compute(l, N):
             print ("Sorry dude, N is not a square.")
             break
 def main():
-    l =	input("Enter value for l: ")
-    N =	input("Enter a value for N: ")
+    l =	int(input("Enter value for l: "))
+    N =	int(input("Enter a value for N: "))
     compute(l, N)
 
 main()
