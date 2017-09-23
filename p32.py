@@ -3,7 +3,7 @@ def main():
     N = 10
     # Check whether the square root falls between intervals                                                                                      
     while( l <= U ):
-        mid = math.floor(l+N/2))
+        mid = math.floor(l+N/2)
         # Check to see if the given numbre is a square of middle                                                                                 
         if( mid*mid == square ):
             return N
