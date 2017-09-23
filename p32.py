@@ -1,74 +1,101 @@
+import math
 
 def computePartA(N):
 
-    l = 1
+    if N < 0:
+        N = N * -1
 
-    if N < 0: N = N * -1
+    return recursivePartA(1, N, N)
 
-    u = N
-    # Check whether the square root falls between intervals      
+# assume l = 1 first time being called
+def recursivePartA(l, u, N):
 
-    while( l <= u ):
 
-        mid = (l+u) // 2
+    # Check whether the square root falls between intervals
 
-        # Check to see if the given number is a square of middle             
-        if( (mid*mid) == N ):
-            return str(mid)
-        # If N is not a square, increment value of l                         
-        elif( N > (mid*mid) ):
-            l =mid + 1
+    # N is not a square
+    if( l > u ):
+        return "Sorry dude, N is not a square."
 
-            # If N is not a square, increment value of u                     
-        elif( N < (mid*mid) ):
-            # Assign value of u                                              
-            u =mid - 1
 
-    # N is not a square                                              
-    return "Sorry dude, N is not a square."
+    mid = (l + u) // 2
 
+    # Check to see if the given number is a square of middle
+    if( N == mid * mid ):
+        return str(mid)
+
+    # If N is not a square, increment value of l
+    elif( N > mid * mid ):
+
+        return recursivePartA(mid + 1, u, N)
+
+    # If N is not a square, increment value of u
+    elif( N < mid * mid ):
+
+        return recursivePartA(l, mid - 1, N)
+    
 def powerOfNumberRecursive(x, y):
     # is x = y^n
     # assume x goes into y evenly
     # passed in first power of x
     # base case because (y^n)/nx = 1 if x = y^n
     # if y = 1 than there will be no power that can be added to 1 to change x from 1
+
+    # if problem check here first
+    if x % y != 0:
+        return 0
+
     if y == 1:
         return 0
+
     # if y > 1 than an exponent will exist such that x > 1 as long as y is divided by x
     else:
         return 1 + powerOfNumberRecursive(x, y // x)
 
 def computePartC(N):
 
-    l = 1
+    if N < 0:
+        N = N * -1
+    if N == 1:
+        return "1"
 
-    if N < 0: N = N * -1
+    k = 2
+    while(k <= (math.log(2, N) // 1)):
+        if powerOfNumberRecursive(k, N):
+            return "1"
 
-    u = N
-    # Check whether the square root falls between intervals      
+    return recursivePartC(1, N, N, k)
 
-    while( l <= u ):
+# assume l = 1 first time being called
+def recursivePartC(l, u, N, k):
 
-        mid = (l+u) // 2
 
-        # Check to see if the given number is a square of middle             
-        if( (mid*mid) == N ):
-            return str(mid)
-        # If N is not a square, increment value of l                         
-        elif( N > (mid*mid) ):
-            l =mid + 1
+    # Check whether the square root falls between intervals
 
-            # If N is not a square, increment value of u                     
-        elif( N < (mid*mid) ):
-            # Assign value of u                                              
-            u =mid - 1
+    # N is not a square
+    if( l > u ):
+        return "Sorry dude, N is not a power."
 
-    # N is not a square                                              
-    return "Sorry dude, N is not a power."
+
+    mid = (l + u) // 2
+
+    # Check to see if the given number is a square of middle
+    if( N == pow(mid, k) ):
+        return str(mid)
+
+    # If N is not a square, increment value of l
+    elif( N > pow(mid, k) ):
+
+        return recursivePartA(mid + 1, u, N)
+
+    # If N is not a square, increment value of u
+    elif( N < pow(mid, k) ):
+
+        return recursivePartA(l, mid - 1, N)
+    
 
 def main():
     N =	int(input("Enter a value for N: "))
-    print(compute(N))
+    print(computePartA(N))
 
 main()
