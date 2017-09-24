@@ -41,7 +41,6 @@ def powerOfNumberRecursive(x, y):
     # base case because (y^n)/nx = 1 if x = y^n
     # if y = 1 than there will be no power that can be added to 1 to change x from 1
 
-    # if problem check here first
     if x % y != 0:
         return 0
 
@@ -57,21 +56,18 @@ def computePartC(N):
     if N < 0:
         N = N * -1
     if N == 1:
-        return "1"
+        return 1
 
     k = 2
-    #print(math.log(N, 2))
-    #print(k <= (math.log(10, N) // 1))
     while(k <= (math.log(N, 2) // 1)):
 
         result = recursivePartC(1, N, N, k)
-        if recursivePartC(1, N, N, k):#(N ** k) == N:#powerOfNumberRecursive(k, N):
+
+        if recursivePartC(1, N, N, k):
             return result
         k = k + 1
-        print(k)
-    print()
-    print(k)
-    #return recursivePartC(1, N, N, k)
+
+    return k
 
 # assume l = 1 first time being called
 def recursivePartC(l, u, N, k):
@@ -81,14 +77,14 @@ def recursivePartC(l, u, N, k):
 
     # N is not a square
     if( l > u ):
-        return "Sorry dude, N is not a power."
+        return 0
 
 
     mid = (l + u) // 2
 
     # Check to see if the given number is a square of middle
     if( N == pow(mid, k) ):
-        return str(mid)
+        return mid
 
     # If N is not a square, increment value of l
     elif( N > pow(mid, k) ):
