@@ -63,11 +63,11 @@ def computePartC(N):
 
         result = recursivePartC(1, N, N, k)
 
-        if recursivePartC(1, N, N, k):
+        if result:
             return result
         k = k + 1
 
-    return k
+    return -1
 
 # assume l = 1 first time being called
 def recursivePartC(l, u, N, k):
