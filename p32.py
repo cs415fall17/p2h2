@@ -10,7 +10,9 @@ def computePartA(N):
 # assume l = 1 first time being called
 def recursivePartA(l, u, N):
 
-
+    # total = log(n^2)
+    # recursive calls = log(n)
+    # * = n^2
     # Check whether the square root falls between intervals
 
     # N is not a square
@@ -53,12 +55,15 @@ def powerOfNumberRecursive(x, y):
 
 def computePartC(N):
 
+    # (log(n))^3
     if N < 0:
         N = N * -1
     if N == 1:
         return 1
 
     k = 2
+    # logn
+
     while(k <= (math.log(N, 2) // 1)):
 
         result = recursivePartC(1, N, N, k)
@@ -72,9 +77,9 @@ def computePartC(N):
 # assume l = 1 first time being called
 def recursivePartC(l, u, N, k):
 
-
+    # (log(n))^2
     # Check whether the square root falls between intervals
-
+    # ** = log(n)
     # N is not a square
     if( l > u ):
         return 0
@@ -83,16 +88,16 @@ def recursivePartC(l, u, N, k):
     mid = (l + u) // 2
 
     # Check to see if the given number is a square of middle
-    if( N == pow(mid, k) ):
+    if( N == mid ** k):
         return mid
 
     # If N is not a square, increment value of l
-    elif( N > pow(mid, k) ):
+    elif( N > mid ** k):
 
         return recursivePartC(mid + 1, u, N, k)
 
     # If N is not a square, increment value of u
-    elif( N < pow(mid, k) ):
+    elif( N < mid ** k):
 
         return recursivePartC(l, mid - 1, N, k)
     
