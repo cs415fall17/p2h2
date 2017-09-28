@@ -506,6 +506,21 @@ def primality2(N, k):
         # test all random numbers
         #if random_number is passes the test then return true
 
+def primality3(N, k):
+    
+    # an array for testing N with -> 2,3,5,7
+    a = [2,3,5,7] # note: all these numbers must be converted to nbinary 
+    
+    for i in range(a.length()):
+        # Since all arithmetic needs to be done in binary, 
+        # the below if statement must be changed such that:
+        # a[i] is converted to binary and passed into the 
+        # modulo function 
+        if( (N % a[i]) == 0 ): 
+            print("No")
+            return false
+    return primality2(N, k)
+    
 
 # problem 2
 
