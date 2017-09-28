@@ -1,4 +1,4 @@
-# David Tauraso and Erich Bucher
+# David Tauraso and Jacques Beauvoir
 
 # all the computations for HW 1 shall be done using binary arithmetic
 # only the user input and the final output will be in decimal.
@@ -458,9 +458,60 @@ def main():
 
 main()
 '''
+# for all problems
+def randomGenerator(n, k):
+    # assume n = k
+    # if n <= 50
+    # generates a random integer in range [0, 2^1000 - 1]
+    # documentation doesn't mention how many bits are in the number
+    s = random.getrandbits(bin2dec(k) - 2)
+    s = dec2bin(s)
+
+    #trim so random_number has eactly k - 2 bits
+    random_number = [s[i] for i in range(len(bin2dec(k) - 2))]
+    return [1] + random_number + [1]
+
+# problem 1
+def modExp(X, Y, Z):
+    # Takes in two reversed binary strings and returns
+    # a binary string of X^Y mod Z.
+    if zero(Y):
+         return [1]
+    z = exp(X, div2(Y))
+
+    if even(Y):
+        a = mult(z, z)
+        (q, r) = divide(a, Z)
+        return r
+    else:
+        a = mult(X, mut(z, z))
+        (q, r) = divide(a, Z)
+        return r
+
+def primality(N):
+    # assume N is a reversed bit array
+    # pick a number from [1] to N
+    random_number = randomGenerator(dec2bin(50), dec2bin(50))
+    return compare(modExp(random_number, subtract(N, [1], N)), [0]) == 0
+
+
+def primality2(N, k):
+
+    # calls primality 
+    # generate random number k times
+    for i in range(bin2dec(k)):
+        if primality(N) is false for 1 item
+            return false
+    return true
+        # test all random numbers
+        #if random_number is passes the test then return true
+
+
+# problem 2
 
 
 def subW2sCompliment(X, Y):
+    # designed to work with egcd
     # X and Y are positive, binary numbers
     # The result is the binary representation of X - Y in twos complement.
     (X1, Y1) = pad(X, Y)
