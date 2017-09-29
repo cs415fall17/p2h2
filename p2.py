@@ -494,7 +494,9 @@ def primality(N):
     # assume N is a reversed bit array
     # pick a number from [1] to N
     random_number = randomGenerator(dec2bin(50), dec2bin(50))
-    return compare(modExp(random_number, subtract(N, [1]), N), [0]) == 0
+    print(N, random_number)
+    # returning a bool
+    return [compare(modExp(random_number, sub(N, [1]), N), [0]) == 0]
 
 
 def primality2(N, k):
@@ -503,9 +505,10 @@ def primality2(N, k):
     # generate random number k times
     #for i in range(bin2dec(k)):
     for i in range(bin2dec(k)):
-        if compare(primality(N), [0]):
+        if compare(primality(N), [1]) == 0:
             return False
 
+    print("passes")
     return True
         # test all random numbers
         #if random_number is passes the test then return true
@@ -515,6 +518,7 @@ def primality3(N, k):
     # an array for testing N with -> 2,3,5,7
     a = [2,3,5,7] # note: all these numbers must be converted to nbinary 
     
+
     for i in range(len(a)):
         binaryA = dec2bin(a[i])
         binaryN = N
@@ -526,20 +530,23 @@ def primality3(N, k):
         print()
         # remainder == 0
         if( compare(r, binaryZero) == 0 ):
+            # quotient == 1
+            if( compare(q, binaryOne) == 0 ):
+                print("yes")
+                return True
+            # quotient > 1
+            #if( compare(q, binaryOne ) == 1 ):
+             #   print("no")
+              #  return False;
             print("No")     
             return False
-            # quotient == 1
-        if( compare(q, binaryOne) == 0 ):
-            print("yes")
-        # quotient > 1
-        #if( compare(q, binaryOne ) == 1 ):
-         #   print("no")
-          #  return False;
+        
+        
     return primality2(N, k)
     
 # assume decimal input has been collected from user
 
-primality3(dec2bin(11), [1])
+primality3(dec2bin(23), dec2bin(1))
 
 # problem 2
 
