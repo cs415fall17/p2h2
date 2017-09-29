@@ -514,21 +514,19 @@ def primality3(N, k):
     a = [2,3,5,7] # note: all these numbers must be converted to nbinary 
     
     for i in range(a.length()):
-        # Since all arithmetic needs to be done in binary, 
-        # the below if statement must be changed such that:
-        # a[i] is converted to binary and passed into the 
-        # modulo function 
-        
-        # divide the two binary numbers and obtain the quotient
-        # and remainder
-        (q,r) = Divide(N,a[i])
-        # 
-        if( r == 0 ):
+        binaryA = dec2bin(a[i])
+        binaryN = dec2bin(N)
+        binaryZero = dec2bin(0)
+	    binaryOne = dec2bin(1)   
+    
+        (q,r) = divide(binaryN, binaryA)
+       
+        if( compare(r, binaryZero) == 0 ):
             print("No")     
             return false
-            if( q == 1 ):
+            if( compare(q, binaryOne) == 0 ):
                 print("yes")
-        if( q > 1 ):
+        if( compare(q, binaryOne ) == 1 ):
             print("no")
             return false;
     return primality2(N, k)
