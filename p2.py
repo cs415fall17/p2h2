@@ -499,10 +499,12 @@ def primality2(N, k):
 
     # calls primality 
     # generate random number k times
+    #for i in range(bin2dec(k)):
     for i in range(bin2dec(k)):
-        if primality(N) is false for 1 item
-            return false
-    return true
+        if compare(primality(N), [0]):
+            return False
+
+    return True
         # test all random numbers
         #if random_number is passes the test then return true
 
@@ -531,6 +533,7 @@ def primality3(N, k):
             return false;
     return primality2(N, k)
     
+primality3(dec2bin(11), [1]):
 
 # problem 2
 
