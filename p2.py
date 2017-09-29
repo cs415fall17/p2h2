@@ -515,23 +515,28 @@ def primality3(N, k):
     
     for i in range(len(a)):
         binaryA = dec2bin(a[i])
-        binaryN = dec2bin(N)
+        binaryN = N
         binaryZero = dec2bin(0)
-	binaryOne = dec2bin(1)   
-    
+        binaryOne = dec2bin(1)
+        print(bin2dec(N), a[i])
         (q,r) = divide(binaryN, binaryA)
-       
+        print(bin2dec(q), bin2dec(r))
+        # remainder == 0
         if( compare(r, binaryZero) == 0 ):
             print("No")     
-            return false
-            if( compare(q, binaryOne) == 0 ):
-                print("yes")
+            return False
+            # quotient == 1
+        if( compare(q, binaryOne) == 0 ):
+            print("yes")
+        # quotient > 1
         if( compare(q, binaryOne ) == 1 ):
             print("no")
-            return false;
+            return False;
     return primality2(N, k)
     
-primality3(dec2bin(11), [1]):
+# assume decimal input has been collected from user
+
+primality3(dec2bin(11), [1])
 
 # problem 2
 
