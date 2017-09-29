@@ -516,9 +516,19 @@ def primality3(N, k):
         # the below if statement must be changed such that:
         # a[i] is converted to binary and passed into the 
         # modulo function 
-        if( (N % a[i]) == 0 ): 
-            print("No")
+        
+        # divide the two binary numbers and obtain the quotient
+        # and remainder
+        (q,r) = Divide(N,a[i])
+        # 
+        if( r == 0 ):
+            print("No")     
             return false
+            if( q == 1 ):
+                print("yes")
+        if( q > 1 ):
+            print("no")
+            return false;
     return primality2(N, k)
     
 
