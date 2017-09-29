@@ -41,7 +41,7 @@
 #                      624893729741902836283505236800
 ##########################################################
 
-import random
+import random as rand___
 import sys
 import time
 
@@ -464,12 +464,14 @@ def randomGenerator(n, k):
     # if n <= 50
     # generates a random integer in range [0, 2^1000 - 1]
     # documentation doesn't mention how many bits are in the number
-    s = random.getrandbits(bin2dec(k) - 2)
+    s = rand___.getrandbits(bin2dec(k) - 2)
     s = dec2bin(s)
 
     #trim so random_number has eactly k - 2 bits
-    random_number = [s[i] for i in range(len(bin2dec(k) - 2))]
-    return [1] + random_number + [1]
+    while len(s) > bin2dec(k) - 2:
+        s = s[1:]
+    #random_number = [s[i] for i in range(len(s)) if len(s) ]
+    return [1] + s + [1]
 
 # problem 1
 def modExp(X, Y, Z):
@@ -492,7 +494,7 @@ def primality(N):
     # assume N is a reversed bit array
     # pick a number from [1] to N
     random_number = randomGenerator(dec2bin(50), dec2bin(50))
-    return compare(modExp(random_number, subtract(N, [1], N)), [0]) == 0
+    return compare(modExp(random_number, subtract(N, [1]), N), [0]) == 0
 
 
 def primality2(N, k):
@@ -521,6 +523,7 @@ def primality3(N, k):
         print(bin2dec(N), a[i])
         (q,r) = divide(binaryN, binaryA)
         print(bin2dec(q), bin2dec(r))
+        print()
         # remainder == 0
         if( compare(r, binaryZero) == 0 ):
             print("No")     
@@ -529,9 +532,9 @@ def primality3(N, k):
         if( compare(q, binaryOne) == 0 ):
             print("yes")
         # quotient > 1
-        if( compare(q, binaryOne ) == 1 ):
-            print("no")
-            return False;
+        #if( compare(q, binaryOne ) == 1 ):
+         #   print("no")
+          #  return False;
     return primality2(N, k)
     
 # assume decimal input has been collected from user
