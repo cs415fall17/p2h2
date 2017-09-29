@@ -543,7 +543,12 @@ def primality3(N, k):
         
         
     return primality2(N, k)
-    
+
+v = randomGenerator(dec2bin(50), dec2bin(50))
+print("v is :" )
+print(v)
+while( primality3(v, dec2bin(1)) != False) :
+    v = randomGenerator(dec2bin(50), dec2bin(50))
 # assume decimal input has been collected from user
 
 primality3(dec2bin(23), dec2bin(1))
