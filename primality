@@ -513,11 +513,11 @@ def primality3(N, k):
     # an array for testing N with -> 2,3,5,7
     a = [2,3,5,7] # note: all these numbers must be converted to nbinary 
     
-    for i in range(a.length()):
+    for i in range(len(a)):
         binaryA = dec2bin(a[i])
         binaryN = dec2bin(N)
         binaryZero = dec2bin(0)
-	    binaryOne = dec2bin(1)   
+	binaryOne = dec2bin(1)   
     
         (q,r) = divide(binaryN, binaryA)
        
