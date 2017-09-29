@@ -551,7 +551,7 @@ while( primality3(v, dec2bin(1)) != False) :
     v = randomGenerator(dec2bin(50), dec2bin(50))
 # assume decimal input has been collected from user
 
-primality3(dec2bin(23), dec2bin(1))
+#primality3(dec2bin(23), dec2bin(1))
 
 # problem 2
 
