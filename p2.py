@@ -479,33 +479,40 @@ def modExp(X, Y, Z):
     # a binary string of X^Y mod Z.
     if zero(Y):
          return [1]
-    z = exp(X, div2(Y))
 
+    z = modExp(X, div2(Y), Z)
     if even(Y):
         a = mult(z, z)
         (q, r) = divide(a, Z)
         return r
     else:
-        a = mult(X, mut(z, z))
+        a = mult(X, mult(z, z))
         (q, r) = divide(a, Z)
         return r
 
 def primality(N):
     # assume N is a reversed bit array
     # pick a number from [1] to N
-    random_number = randomGenerator(dec2bin(50), dec2bin(50))
-    print(N, random_number)
+    random_number = randomGenerator(dec2bin(10), dec2bin(10))
+    print(bin2dec(random_number), "^", bin2dec(N) - 1, "mod", bin2dec(N))
     # returning a bool
-    return [compare(modExp(random_number, sub(N, [1]), N), [0]) == 0]
+    x = modExp(random_number, sub(N, [1]), N)
+    # delete padding
+    x = [x[i] for i in range(len(x)) if x[i] != 0]
+    print(bin2dec(x), x, [1], compare(x, [1]) == 0)
+    if compare(modExp(random_number, sub(N, [1]), N), [1]) == 0:
+        return [1]
+    return [0]
 
 
 def primality2(N, k):
 
     # calls primality 
     # generate random number k times
-    #for i in range(bin2dec(k)):
+
     for i in range(bin2dec(k)):
-        if compare(primality(N), [1]) == 0:
+        print()
+        if compare(primality(N), [0]) == 0:
             return False
 
     print("passes")
@@ -544,11 +551,15 @@ def primality3(N, k):
         
     return primality2(N, k)
 
-v = randomGenerator(dec2bin(50), dec2bin(50))
+v = randomGenerator(dec2bin(10), dec2bin(10))
 print("v is :" )
-print(v)
-while( primality3(v, dec2bin(1)) != False) :
-    v = randomGenerator(dec2bin(50), dec2bin(50))
+print(bin2dec(v))
+while( primality3(v, dec2bin(10)) == False) :
+    #print("result", primality3(v, dec2bin(1)))
+    v = randomGenerator(dec2bin(10), dec2bin(10))
+    #print("v is :" )
+    #print(bin2dec(v))
+
 # assume decimal input has been collected from user
 
 #primality3(dec2bin(23), dec2bin(1))
@@ -612,3 +623,6 @@ def modinv(a, n):
         (q, r) = divide(x, n)
         temp = sub(mult(add(q, [1]), n), x)
         return temp
+
+# test inverse problem
+print(bin2dec(modinv(dec2bin(11), dec2bin(24))))
