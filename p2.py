@@ -594,9 +594,9 @@ def subW2sCompliment(X, Y, s):
     # (0)' = [1,0]
     # last bit should be sign bit
     s = [negative_bit]
-    print("in call")
-    print(bin2dec(X1), bin2dec(twosComplement(Y)), bin2dec(twosComplement(result)), s)
-    print()
+    #print("in call")
+    #print(bin2dec(X1), bin2dec(twosComplement(Y)), bin2dec(twosComplement(result)), s)
+    #print()
     return (twosComplement(result), s)
 
 def egcd(a,b):
@@ -604,14 +604,14 @@ def egcd(a,b):
     # b == 0
     if compare(b, [0]) == 0:
         # default set s to 3
-        print(1, 0, bin2dec(a), 3)
-        print()
+        #print(1, 0, bin2dec(a), 3)
+        #print()
         return ([1], [0], a, [1,1])
 
     (q, r) = divide(a, b)
 
     (x1, y1, d, s) = egcd(b, r)
-    print(bin2dec(x1), bin2dec(y1), bin2dec(d), bin2dec(s))
+    #print(bin2dec(x1), bin2dec(y1), bin2dec(d), bin2dec(s))
 
     #print()
     #print()
@@ -644,8 +644,8 @@ def egcd(a,b):
         #if compare(s1, [])
         s = [0,1]
 
-    print(bin2dec(y1), bin2dec(new_x), bin2dec(d), bin2dec(s))
-    print()
+    #print(bin2dec(y1), bin2dec(new_x), bin2dec(d), bin2dec(s))
+    #print()
     return (y1, new_x, d, s)
 
 # should work with modinverse teacher wrote
@@ -654,24 +654,24 @@ def modinv(a, n):
     (x, y, d, s) = egcd(a, n)
     if compare(d, [1]) != 0:
         return []
-    print(bin2dec(x), bin2dec(s))
+    #print(bin2dec(x), bin2dec(s))
 
     #binaryX = dec2bin(x)
     #binaryY = dec2bin(n)
     (quotient, remainder) = divide(x, n)
-    print("after divide")
-    print(bin2dec(remainder), s)
+    #print("after divide")
+    #print(bin2dec(remainder), s)
 
 
     if compare(s, [0, 1]) == 0:
-        print("remainder then")
-        print(bin2dec(remainder))
+        #print("remainder then")
+        #print(bin2dec(remainder))
         return remainder
     else:
-        print("correct")
+        #print("correct")
         (q, r) = divide(x, n)
         remainder = sub(mult(add(q, [1]), n), x)
-        print(bin2dec(remainder))
+        #print(bin2dec(remainder))
         return remainder
 
 # test inverse problem
