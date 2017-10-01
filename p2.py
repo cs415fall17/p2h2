@@ -493,14 +493,16 @@ def modExp(X, Y, Z):
 def primality(N):
     # assume N is a reversed bit array
     # pick a number from [1] to N
+    
     random_number = randomGenerator(dec2bin(50), dec2bin(50))
-
-    #print(bin2dec(random_number), "^", bin2dec(N) - 1, "mod", bin2dec(N))
+    while not ((compare(random_number, [1]) == 1) and (compare(random_number, N) == 2)):
+        random_number = randomGenerator(dec2bin(50), dec2bin(50))
+    print(bin2dec(random_number), "^", bin2dec(N) - 1, "mod", bin2dec(N))
     # returning a bool
-    #x = modExp(random_number, sub(N, [1]), N)
+    x = modExp(random_number, sub(N, [1]), N)
     # delete padding
-    #x = [x[i] for i in range(len(x)) if x[i] != 0]
-    #print(bin2dec(x), x, [1], compare(x, [1]) == 0)
+    x = [x[i] for i in range(len(x)) if x[i] != 0]
+    print(bin2dec(x), x, [1], compare(x, [1]) == 0)
     if compare(modExp(random_number, sub(N, [1]), N), [1]) == 0:
         return [1]
     return [0]
@@ -555,7 +557,7 @@ v = randomGenerator(dec2bin(50), dec2bin(50))
 #print("v is :" )
 #print(bin2dec(v))
 # is this correct number of times to check?
-while( primality3(v, dec2bin(20)) == False) :
+while( primality3(v, dec2bin(10)) == False) :
     #print("result", primality3(v, dec2bin(1)))
     v = randomGenerator(dec2bin(50), dec2bin(50))
     #print("v is :" )
