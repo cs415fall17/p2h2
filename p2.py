@@ -573,12 +573,12 @@ def primality4():
 
 
 
-def subW2sCompliment(X, Y):
+def subW2sCompliment(X, Y, s):
     # designed to work with egcd
     # X and Y are positive, binary numbers
     # The result is the binary representation of X - Y in twos complement.
     if len(Y) == 1 and Y[0] == 0:
-        return (X, [1,1])
+        return (X, s)
     (X1, Y1) = pad(X, Y)
     X1.append(0) #Add one extra bit for the flags for two's complement
     Y1.append(0)
@@ -594,8 +594,9 @@ def subW2sCompliment(X, Y):
     # (0)' = [1,0]
     # last bit should be sign bit
     s = [negative_bit]
-    #print(bin2dec(X1), bin2dec(twosComplement(Y)), bin2dec(twosComplement(result)), negative_bit)
-
+    print("in call")
+    print(bin2dec(X1), bin2dec(twosComplement(Y)), bin2dec(twosComplement(result)), s)
+    print()
     return (twosComplement(result), s)
 
 def egcd(a,b):
@@ -627,18 +628,22 @@ def egcd(a,b):
         #q2
     #print(bin2dec(r2), bin2dec(y1), bin2dec(mult(q2, y1)))
 
-
+    #sign = [0]
     #x1 - r2y1
     # multiply doesn't assume wether one of its operands is negative
     if compare(s,[1]) == 1:
-        # if y1 is a negative add the two numbers together,                                                                                                                                                                           
-        # then set s to 1                                                                                                                                                                                                             
-	new_x =	add(x1, mult(q2,y1))
-    # else subtract as usual                                                                                                                                                                                                          
+        # if y1 is a negative add the two numbers together,
+        # then set s to 1
+        new_x =	add(x1, mult(q2,y1))
+        s = [1]
+        # else subtract as usual
+
     else:
         #x1 - r2y1                                
-        (new_x, sign) = subW2sCompliment(x1, mult(q2, y1))
-    
+        (new_x, s) = subW2sCompliment(x1, mult(q2, y1), s)
+        #if compare(s1, [])
+        s = [0,1]
+
     print(bin2dec(y1), bin2dec(new_x), bin2dec(d), bin2dec(s))
     print()
     return (y1, new_x, d, s)
@@ -649,17 +654,28 @@ def modinv(a, n):
     (x, y, d, s) = egcd(a, n)
     if compare(d, [1]) != 0:
         return []
+    print(bin2dec(x), bin2dec(s))
+
     #binaryX = dec2bin(x)
     #binaryY = dec2bin(n)
     (quotient, remainder) = divide(x, n)
+    print("after divide")
+    print(bin2dec(remainder), s)
 
-    if s == 2:
+
+    if compare(s, [0, 1]) == 0:
+        print("remainder then")
+        print(bin2dec(remainder))
         return remainder
     else:
+        print("correct")
         (q, r) = divide(x, n)
         remainder = sub(mult(add(q, [1]), n), x)
+        print(bin2dec(remainder))
         return remainder
 
 # test inverse problem
 print(bin2dec(modinv(dec2bin(11), dec2bin(24))))
+print()
 #print(subW2sCompliment([0], dec2bin(5)))
+print(bin2dec(modinv(dec2bin(3), dec2bin(40))))
