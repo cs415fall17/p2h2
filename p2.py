@@ -577,20 +577,24 @@ def subW2sCompliment(X, Y):
     # designed to work with egcd
     # X and Y are positive, binary numbers
     # The result is the binary representation of X - Y in twos complement.
+    if len(Y) == 1 and Y[0] == 0:
+        return (X, 0)
     (X1, Y1) = pad(X, Y)
     X1.append(0) #Add one extra bit for the flags for two's complement
     Y1.append(0)
     Y1 = twosComplement(Y1) #Subtract
     #print(Y1)
     result = add(X1, Y1)
+
     # hack off extra carry bit
     negative_bit = result[len(result) - 1]
     if len(result) > len(X1):
         result = result[:len(result)]
-    
+
+    # (0)' = [1,0]
     # last bit should be sign bit
     s = negative_bit
-    #print(bin2dec(X1), bin2dec(twosComplement(Y1)), bin2dec(twosComplement(result)), negative_bit)
+    #print(bin2dec(X1), bin2dec(twosComplement(Y)), bin2dec(twosComplement(result)), negative_bit)
 
     return (twosComplement(result), s)
 
@@ -604,19 +608,24 @@ def egcd(a,b):
     (q, r) = divide(a, b)
 
     (x1, y1, d, s) = egcd(b, r)
-    print(bin2dec(y1), bin2dec(x1), bin2dec(d))
+    print(bin2dec(x1), bin2dec(y1), bin2dec(d))
+    #print()
+    #print()
 
     # (y1, x1 - floor(a/b), d)
     #x1 - floor(a/b)y1
     (q2, r2) = divide(a, b)
+    #print(bin2dec(r2), bin2dec(y1), bin2dec(mult(q2, y1)))
 
 
     #x1 - r2y1
-    (new_x, sign) = subW2sCompliment(x1, mult(r2, y1))
-
+    (new_x, sign) = subW2sCompliment(x1, mult(q2, y1))
+    # exit()
+    #print()
+    #print()
     # change this?
     s = 1 if sign else 2
-    print(bin2dec(y1), bin2dec(new_x), bin2dec(d))
+    print(bin2dec(new_x), bin2dec(y1), bin2dec(d))
     print()
     return (y1, new_x, d, s)
 
