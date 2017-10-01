@@ -578,7 +578,7 @@ def subW2sCompliment(X, Y):
     # X and Y are positive, binary numbers
     # The result is the binary representation of X - Y in twos complement.
     if len(Y) == 1 and Y[0] == 0:
-        return (X, 0)
+        return (X, [1,1])
     (X1, Y1) = pad(X, Y)
     X1.append(0) #Add one extra bit for the flags for two's complement
     Y1.append(0)
@@ -593,7 +593,7 @@ def subW2sCompliment(X, Y):
 
     # (0)' = [1,0]
     # last bit should be sign bit
-    s = negative_bit
+    s = [negative_bit]
     #print(bin2dec(X1), bin2dec(twosComplement(Y)), bin2dec(twosComplement(result)), negative_bit)
 
     return (twosComplement(result), s)
@@ -636,7 +636,13 @@ def egcd(a,b):
     #print()
     #print()
     # change this?
-    s = [0] if sign else [1]
+    if compare(sign, [1,1]) == 0:
+        s = [1,1]
+    elif compare(sign, [1]) == 0:
+        s = [1] 
+
+    else:
+        s = [0]
     print(bin2dec(y1), bin2dec(new_x), bin2dec(d), bin2dec(s))
     print()
     return (y1, new_x, d, s)
