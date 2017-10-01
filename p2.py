@@ -603,29 +603,41 @@ def egcd(a,b):
     # b == 0
     if compare(b, [0]) == 0:
         # default set s to 3
+        print(1, 0, bin2dec(a), 3)
+        print()
         return ([1], [0], a, [1,1])
 
     (q, r) = divide(a, b)
 
     (x1, y1, d, s) = egcd(b, r)
-    print(bin2dec(x1), bin2dec(y1), bin2dec(d))
+    print(bin2dec(x1), bin2dec(y1), bin2dec(d), bin2dec(s))
+
     #print()
     #print()
 
     # (y1, x1 - floor(a/b), d)
     #x1 - floor(a/b)y1
     (q2, r2) = divide(a, b)
+
+    # if s is 1 then y must be negative
+    #if compare(s, [1]) == 0:
+        # assume y1 is negative
+        #twosComplement(y1.append(0))
+        # assume q2 is positive
+        #q2
     #print(bin2dec(r2), bin2dec(y1), bin2dec(mult(q2, y1)))
 
 
     #x1 - r2y1
+    # multiply doesn't assume wether one of its operands is negative
+
     (new_x, sign) = subW2sCompliment(x1, mult(q2, y1))
     # exit()
     #print()
     #print()
     # change this?
-    s = 1 if sign else 2
-    print(bin2dec(new_x), bin2dec(y1), bin2dec(d))
+    s = [0] if sign else [1]
+    print(bin2dec(y1), bin2dec(new_x), bin2dec(d), bin2dec(s))
     print()
     return (y1, new_x, d, s)
 
