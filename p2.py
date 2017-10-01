@@ -550,24 +550,27 @@ def primality3(N, k):
         
         
     return primality2(N, k)
+# problem 2
+def primality4():
 
-v = randomGenerator(dec2bin(50), dec2bin(50))
-#print("v is :" )
-#print(bin2dec(v))
-# is this correct number of times to check?
-while( primality3(v, dec2bin(20)) == False) :
-    #print("result", primality3(v, dec2bin(1)))
     v = randomGenerator(dec2bin(50), dec2bin(50))
     #print("v is :" )
     #print(bin2dec(v))
-print(bin2dec(v))
-print("passes")
+    # is this correct number of times to check?
+    while( primality3(v, dec2bin(20)) == False) :
+        #print("result", primality3(v, dec2bin(1)))
+        v = randomGenerator(dec2bin(50), dec2bin(50))
+        #print("v is :" )
+        #print(bin2dec(v))
+    print(bin2dec(v))
+    print("passes")
 
+# primality4()
 # assume decimal input has been collected from user
 
 #primality3(dec2bin(23), dec2bin(1))
 
-# problem 2
+
 
 
 def subW2sCompliment(X, Y):
@@ -578,16 +581,18 @@ def subW2sCompliment(X, Y):
     X1.append(0) #Add one extra bit for the flags for two's complement
     Y1.append(0)
     Y1 = twosComplement(Y1) #Subtract
-
+    #print(Y1)
     result = add(X1, Y1)
-
     # hack off extra carry bit
+    negative_bit = result[len(result) - 1]
     if len(result) > len(X1):
-        result = result[:len(result) - 1]
+        result = result[:len(result)]
     
     # last bit should be sign bit
-    s = result[:len(result) - 1]
-    return (result, s)
+    s = negative_bit
+    #print(bin2dec(X1), bin2dec(twosComplement(Y1)), bin2dec(twosComplement(result)), negative_bit)
+
+    return (twosComplement(result), s)
 
 def egcd(a,b):
 
@@ -598,7 +603,8 @@ def egcd(a,b):
 
     (q, r) = divide(a, b)
 
-    (y1, x1, d, s) = egcd(b, r)
+    (x1, y1, d, s) = egcd(b, r)
+    print(bin2dec(y1), bin2dec(x1), bin2dec(d))
 
     # (y1, x1 - floor(a/b), d)
     #x1 - floor(a/b)y1
@@ -610,18 +616,20 @@ def egcd(a,b):
 
     # change this?
     s = 1 if sign else 2
-    
+    print(bin2dec(y1), bin2dec(new_x), bin2dec(d))
+    print()
     return (y1, new_x, d, s)
 
 # should work with modinverse teacher wrote
 def modinv(a, n):
     # computes a^(-1) mod n
-    (x, y, d, x) = egcd(a, n)
+    (x, y, d, s) = egcd(a, n)
     if compare(d, [1]) != 0:
         return []
-    binaryX = dec2bin(x)
-    binaryY = dec2bin(n)
+    #binaryX = dec2bin(x)
+    #binaryY = dec2bin(n)
     (quotient, remainder) = divide(x, n)
+
     if s == 2:
         return remainder
     else:
@@ -631,3 +639,4 @@ def modinv(a, n):
 
 # test inverse problem
 print(bin2dec(modinv(dec2bin(11), dec2bin(24))))
+#print(subW2sCompliment([0], dec2bin(5)))
