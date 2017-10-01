@@ -630,8 +630,14 @@ def egcd(a,b):
 
     #x1 - r2y1
     # multiply doesn't assume wether one of its operands is negative
-
-    (new_x, sign) = subW2sCompliment(x1, mult(q2, y1))
+    if compare(s,[1]) == 1:
+        # if y1 is a negative add the two numbers together,                                                                                                                                                                           
+        # then set s to 1                                                                                                                                                                                                             
+	    new_x =	add(x1, mult(q2,y1))
+    # else subtract as usual                                                                                                                                                                                                          
+    else:
+        #x1 - r2y1                                
+        (new_x, sign) = subW2sCompliment(x1, mult(q2, y1))
     # exit()
     #print()
     #print()
