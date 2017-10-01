@@ -633,22 +633,12 @@ def egcd(a,b):
     if compare(s,[1]) == 1:
         # if y1 is a negative add the two numbers together,                                                                                                                                                                           
         # then set s to 1                                                                                                                                                                                                             
-	    new_x =	add(x1, mult(q2,y1))
+	new_x =	add(x1, mult(q2,y1))
     # else subtract as usual                                                                                                                                                                                                          
     else:
         #x1 - r2y1                                
         (new_x, sign) = subW2sCompliment(x1, mult(q2, y1))
-    # exit()
-    #print()
-    #print()
-    # change this?
-    if compare(sign, [1,1]) == 0:
-        s = [1,1]
-    elif compare(sign, [1]) == 0:
-        s = [1] 
-
-    else:
-        s = [0]
+    
     print(bin2dec(y1), bin2dec(new_x), bin2dec(d), bin2dec(s))
     print()
     return (y1, new_x, d, s)
