@@ -602,7 +602,7 @@ def subW2sCompliment(X, Y, s):
     #print("in call")
     #print(bin2dec(X1), bin2dec(twosComplement(Y)), bin2dec(twosComplement(result)), s)
     #print()
-    # converts it out of 2's compliment so the actual value can be used
+    # converts it out of 2's compliment so the actual binary representation of the value can be used
     return (twosComplement(result), s)
 
 def egcd(a,b):
@@ -610,8 +610,8 @@ def egcd(a,b):
     # b == 0
     if compare(b, [0]) == 0:
         # default set s to 3
-        print(1, 0, bin2dec(a), 3)
-        print()
+        #print(1, 0, bin2dec(a), 3)
+        #print()
         return ([1], [0], a, [1,1])
 
     # claims noneType error
@@ -703,9 +703,9 @@ def modinv(a, n):
         return remainder
 def findE(k, p, q):
     # e = generate random number with k bits
-    e = primality4(k, k)
-    while compare(gcd(e, mult(sub(p, [1]),  sub(q, [1])) ), [1]) != 0:
-        e = primality4(k, k)
+    e = randomGenerator(k, k)
+    while( compare(gcd(e, mult(sub(p, [1]),  sub(q, [1])) ), [1]) != 0 ):
+        e = randomGenerator(k, k)
     return e
     # while compare(gcd(e, (p - 1)(q - 1)), [1]) != 0
         # e = generate random number with k bits
@@ -718,14 +718,16 @@ def rsaAlgorithm(M):
     # stopped working when 50 bit numbers started being used
     # run untill b == 1
     #while compare(b, [1]) != 0:
-    while compare(p, q) == 0:
+    while( compare(p, q) == 0 ):
         p = primality4(n, k)
         q = primality4(n, k)
+    N = mult(p, q)
+    #print("N", bin2dec(N))
     #p = dec2bin(5)
     #q = dec2bin(7)
     e = findE(k, p, q)
-    print("e", bin2dec(e), "p", bin2dec(p), "q", bin2dec(q))
-    print()
+    #print("e", bin2dec(e), "p", bin2dec(p), "q", bin2dec(q))
+    #print()
     # claimed non
     #print(bin2dec(e))
     # appropriate e's are generated such that an inverse can't be computed(wolfram alpha agrees with this)
@@ -733,10 +735,18 @@ def rsaAlgorithm(M):
     #e = dec2bin(11)
     #phi = dec2bin(24)
     d = modinv(e, phi)
-    print("d", bin2dec(d), "(p - 1)(q - 1)", bin2dec(phi))
-    print()
-    (a, b) = divide(mult(e, d), phi)
-    print(bin2dec(e), "*", bin2dec(d), "mod", bin2dec(phi), "=", bin2dec(b))
+    #print("d", bin2dec(d), "(p - 1)(q - 1)", bin2dec(phi))
+    #print()
+    #(a, b) = divide(mult(e, d), phi)
+    #print(bin2dec(e), "*", bin2dec(d), "mod", bin2dec(phi), "=", bin2dec(b))
+    print(bin2dec(M))
+    #encrypt = M^e mod N
+    encrypt = modExp(M, e, N)
+    print(bin2dec(encrypt))
+    #decrypt = encrypt^d mod N
+    decrypt = modExp(encrypt, d, N)
+    print(bin2dec(decrypt))
+
 
 # test inverse problem
 '''
@@ -756,5 +766,5 @@ print(bin2dec(r3))
 #(q4, r4) = divide(mult(dec2bin(918426559676621), modinv(dec2bin(918426559676621), dec2bin(75771427558771995574901759243))), dec2bin(75771427558771995574901759243))
 #print(bin2dec(r4))
 #findE(dec2bin(50), dec2bin(3), dec2bin(5))
-rsaAlgorithm(50)
+rsaAlgorithm(dec2bin(1234567890987654321))
 #print(bin2dec(modinv(dec2bin(345), dec2bin(767))))
