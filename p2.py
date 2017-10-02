@@ -493,6 +493,7 @@ def modExp(X, Y, Z):
 def primality(N):
     # assume N is a reversed bit array
     # pick a number from [1] to N
+    # the random number must be in range 1 < random_number < N
     random_number = randomGenerator(dec2bin(50), dec2bin(50))
     while not (compare(random_number, [1]) == 1 and compare(random_number, N) == 2):
             random_number = randomGenerator(dec2bin(50), dec2bin(50))
