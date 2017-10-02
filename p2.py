@@ -494,6 +494,8 @@ def primality(N):
     # assume N is a reversed bit array
     # pick a number from [1] to N
     random_number = randomGenerator(dec2bin(50), dec2bin(50))
+    while not (compare(random_number, [1]) == 1 and compare(random_number, N) == 2):
+            random_number = randomGenerator(dec2bin(50), dec2bin(50))
 
     #print(bin2dec(random_number), "^", bin2dec(N) - 1, "mod", bin2dec(N))
     # returning a bool
@@ -551,19 +553,19 @@ def primality3(N, k):
         
     return primality2(N, k)
 # problem 2
-def primality4():
-
-    v = randomGenerator(dec2bin(50), dec2bin(50))
+def primality4(n, k):
+    # n <= 50
+    v = randomGenerator(n, k)
     #print("v is :" )
     #print(bin2dec(v))
     # is this correct number of times to check?
-    while( primality3(v, dec2bin(20)) == False) :
+    while( primality3(v, dec2bin(10)) == False) :
         #print("result", primality3(v, dec2bin(1)))
-        v = randomGenerator(dec2bin(50), dec2bin(50))
+        v = randomGenerator(n, k)
         #print("v is :" )
         #print(bin2dec(v))
-    print(bin2dec(v))
-    print("passes")
+    return v
+    #print("passes")
 
 # primality4()
 # assume decimal input has been collected from user
@@ -608,10 +610,11 @@ def egcd(a,b):
         #print()
         return ([1], [0], a, [1,1])
 
+    # claims noneType error
     (q, r) = divide(a, b)
 
     (x1, y1, d, s) = egcd(b, r)
-    #print(bin2dec(x1), bin2dec(y1), bin2dec(d), bin2dec(s))
+    print(bin2dec(x1), bin2dec(y1), bin2dec(d), bin2dec(s))
 
     #print()
     #print()
@@ -626,8 +629,8 @@ def egcd(a,b):
         #twosComplement(y1.append(0))
         # assume q2 is positive
         #q2
-    #print(bin2dec(r2), bin2dec(y1), bin2dec(mult(q2, y1)))
-
+    print(bin2dec(r2), bin2dec(y1), bin2dec(mult(q2, y1)))
+    print()
     #sign = [0]
     #x1 - r2y1
     # multiply doesn't assume wether one of its operands is negative
@@ -651,6 +654,7 @@ def egcd(a,b):
 # should work with modinverse teacher wrote
 def modinv(a, n):
     # computes a^(-1) mod n
+    # claims non type error
     (x, y, d, s) = egcd(a, n)
     if compare(d, [1]) != 0:
         return []
@@ -673,9 +677,61 @@ def modinv(a, n):
         remainder = sub(mult(add(q, [1]), n), x)
         #print(bin2dec(remainder))
         return remainder
+def findE(k, p, q):
+    # e = generate random number with k bits
+    e = primality4(k, k)
+    while compare(gcd(e, mult(sub(p, [1]),  sub(q, [1])) ), [1]) != 0:
+        e = primality4(k, k)
+    return e
+    # while compare(gcd(e, (p - 1)(q - 1)), [1]) != 0
+        # e = generate random number with k bits
+    # return e
+def rsaAlgorithm(M):
+    n = dec2bin(50)
+    k = dec2bin(50)
+    p = primality4(n, k)
+    q = primality4(n, k)
+    # stopped working when 50 bit numbers started being used
+    # run untill b == 1
+    b = [0]
+    #while compare(b, [1]) != 0:
+    while compare(p, q) == 0:
+        p = primality4(n, k)
+        q = primality4(n, k)
+    #p = dec2bin(5)
+    #q = dec2bin(7)
+    e = findE(k, p, q)
+    print("e", bin2dec(e), "p", bin2dec(p), "q", bin2dec(q))
+    print()
+    # claimed non
+    #print(bin2dec(e))
+    # appropriate e's are generated such that an inverse can't be computed(wolfram alpha agrees with this)
+    phi = mult(sub(p, [1]),  sub(q, [1]))
+    #e = dec2bin(11)
+    #phi = dec2bin(24)
+    d = modinv(e, phi)
+    print("d", bin2dec(d), "(p - 1)(q - 1)", bin2dec(phi))
+    print()
+    (a, b) = divide(mult(e, d), phi)
+    print(bin2dec(e), "*", bin2dec(d), "mod", bin2dec(phi), "=", bin2dec(b))
 
 # test inverse problem
+'''
 print(bin2dec(modinv(dec2bin(11), dec2bin(24))))
+(q1, r1) = divide(mult(dec2bin(11), modinv(dec2bin(11), dec2bin(24))), dec2bin(24))
+print(bin2dec(r1))
 print()
 #print(subW2sCompliment([0], dec2bin(5)))
 print(bin2dec(modinv(dec2bin(3), dec2bin(40))))
+(q2, r2) = divide(mult(dec2bin(3), modinv(dec2bin(3), dec2bin(40))), dec2bin(40))
+print(bin2dec(r2))
+print()
+print(bin2dec(modinv(dec2bin(31), dec2bin(37))))
+(q3, r3) = divide(mult(dec2bin(31), modinv(dec2bin(31), dec2bin(37))), dec2bin(37))
+print(bin2dec(r3))
+'''
+#(q4, r4) = divide(mult(dec2bin(918426559676621), modinv(dec2bin(918426559676621), dec2bin(75771427558771995574901759243))), dec2bin(75771427558771995574901759243))
+#print(bin2dec(r4))
+#findE(dec2bin(50), dec2bin(3), dec2bin(5))
+#rsaAlgorithm(50)
+print(bin2dec(modinv(dec2bin(345), dec2bin(767))))
