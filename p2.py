@@ -577,6 +577,8 @@ def primality4(n, k):
 
 
 def subW2sCompliment(X, Y, s):
+    # has no idea X may be negative
+    #print(bin2dec(X), bin2dec(Y))
     # designed to work with egcd
     # X and Y are positive, binary numbers
     # The result is the binary representation of X - Y in twos complement.
@@ -600,6 +602,7 @@ def subW2sCompliment(X, Y, s):
     #print("in call")
     #print(bin2dec(X1), bin2dec(twosComplement(Y)), bin2dec(twosComplement(result)), s)
     #print()
+    # converts it out of 2's compliment so the actual value can be used
     return (twosComplement(result), s)
 
 def egcd(a,b):
@@ -607,15 +610,15 @@ def egcd(a,b):
     # b == 0
     if compare(b, [0]) == 0:
         # default set s to 3
-        #print(1, 0, bin2dec(a), 3)
-        #print()
+        print(1, 0, bin2dec(a), 3)
+        print()
         return ([1], [0], a, [1,1])
 
     # claims noneType error
     (q, r) = divide(a, b)
 
     (x1, y1, d, s) = egcd(b, r)
-    print(bin2dec(x1), bin2dec(y1), bin2dec(d), bin2dec(s))
+    #print(bin2dec(x1), bin2dec(y1), bin2dec(d), bin2dec(s))
 
     #print()
     #print()
@@ -630,11 +633,13 @@ def egcd(a,b):
         #twosComplement(y1.append(0))
         # assume q2 is positive
         #q2
-    print(bin2dec(r2), bin2dec(y1), bin2dec(mult(q2, y1)))
-    print()
+    #print(bin2dec(r2), bin2dec(y1), bin2dec(mult(q2, y1)))
+    #print()
     #sign = [0]
     #x1 - r2y1
     # multiply doesn't assume wether one of its operands is negative
+    # f-loor(a/b) (-x)
+    # s > 1 so y1 must be negative
     if compare(s,[1]) == 1:
         # if y1 is a negative add the two numbers together,
         # then set s to 1
@@ -642,9 +647,27 @@ def egcd(a,b):
         s = [1]
         # else subtract as usual
 
+    # s == 1
     else:
-        #x1 - r2y1                                
-        (new_x, s) = subW2sCompliment(x1, mult(q2, y1), s)
+
+        #x1 - r2y1                    
+        #  subW2sCompliment(0, mult(q2, y1)) = -100
+        # x1 - floor(a/b)y1
+        # x is negative and - floor(a/b)y1 is nagative
+        # first_part = 0 - floor(a/b)y1
+        # second_part = x1 + first_part
+        # result = 0 - second_part
+        (result_from_from_second_term, s1) = subW2sCompliment([0], mult(q2, y1), s)
+        positive_sub_part = add(x1, result_from_from_second_term)
+
+        #print(bin2dec(result_from_from_second_term))
+        #print(bin2dec(positive_sub_part))
+        (actual_result, s) = subW2sCompliment([0], positive_sub_part, s)
+        #print(bin2dec(actual_result), bin2dec(s))
+        new_x = actual_result
+        #s = s2
+        # subW2sCompliment(0,  add(x1, subW2sCompliment(0, mult(q2, y1))))
+        #(new_x, s) = subW2sCompliment(x1, mult(q2, y1), s)
         #if compare(s1, [])
         s = [0,1]
 
@@ -694,7 +717,6 @@ def rsaAlgorithm(M):
     q = primality4(n, k)
     # stopped working when 50 bit numbers started being used
     # run untill b == 1
-    b = [0]
     #while compare(b, [1]) != 0:
     while compare(p, q) == 0:
         p = primality4(n, k)
@@ -734,5 +756,5 @@ print(bin2dec(r3))
 #(q4, r4) = divide(mult(dec2bin(918426559676621), modinv(dec2bin(918426559676621), dec2bin(75771427558771995574901759243))), dec2bin(75771427558771995574901759243))
 #print(bin2dec(r4))
 #findE(dec2bin(50), dec2bin(3), dec2bin(5))
-#rsaAlgorithm(50)
-print(bin2dec(modinv(dec2bin(345), dec2bin(767))))
+rsaAlgorithm(50)
+#print(bin2dec(modinv(dec2bin(345), dec2bin(767))))
