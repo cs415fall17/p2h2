@@ -42,6 +42,7 @@
 ##########################################################
 
 import random as rand___
+from random import SystemRandom
 import sys
 import time
 
@@ -350,73 +351,7 @@ def gcd(X, Y):
     (q, r) = divide(X, Y)
     return gcd(Y, r)
 
-'''
-def problem1():
-    print("Enter values for A, B, C, and D, which can be used to calculate A^B - C^D")
-    A = int(input("A: "))
-    B = int(input("B: "))
-    C = int(input("C: "))
-    D = int(input("D: "))
 
-    result = problem1Calc(A, B, C, D)
-    #Output: 3621042145110495340304913321770092884828963481118630680783443137199360424701178235489444339150903695510140270221458360654677736177726261420668704432019096568923217654887729426654819147812495289601990198
-    print("Result: ", result, "\n")
-
-
-def problem1Calc(A, B, C, D):
-    # A, B, C, and D should all be positive decimal values.
-    # The result will be returned as a decimal value.
-    firstHalf = exp(dec2bin(A), dec2bin(B))
-    secondHalf = exp(dec2bin(C), dec2bin(D))
-    difference =  twosComp2Dec(sub(firstHalf, secondHalf))
-    return difference
-'''
-'''
-def problem2():
-    print("Enter values for A, B, C, and D, which can be used to calculate A^B / C^D")
-    A = int(input("A: "))
-    B = int(input("B: "))
-    C = int(input("C: "))
-    D = int(input("D: "))
-    #Output: Quotient: 223346796471162164452913306468608511973357088088077011223389370777657713512498752849853123746821473506392127360180733334528455377517683142902106402854175807704081
-#         Remainder: 868589458788803459890025777897148259540992011101528169885851420031124037456917859918715079950453053934476646860356569316780185
-    (q, r) = problem2Calc(A, B, C, D)
-    print("Quotient Result: " , q, "   Remainder Result: ", r, "\n")
-
-
-def problem2Calc(A, B, C, D):
-    # A, B, C, and D should all be positive decimal values.
-    # The result will be returned as a decimal value.
-    firstHalf = exp(dec2bin(A), dec2bin(B))
-    secondHalf = exp(dec2bin(C), dec2bin(D))
-    (q, r) =  divide(firstHalf, secondHalf)
-    (q, r) = (bin2dec(q), bin2dec(r))
-    return (q, r)
-'''
-'''
-def problem3():
-    print("Enter a value A to calculate 1/1 + 1/2 + 1/3 +... 1/A")
-    A = int(input("A: "))
-    # Output: Numerator: 3028810706851429109067025637383
-    #         Denominator: 624893729741902836283505236800
-    #         Numerator: 3028810706851429109067025637383
-    #         Denominator: 624893729741902836283505236800
-
-    (numerator, denominator) = problem3Calc(A)
-    print("Numerator:", numerator)
-    print("Denominator:", denominator)
-
-
-def problem3Calc(N):
-    # Given N, the function will return the sum of 1/1 + 1/2 + 1/3...+ 1/N
-    # in decimal.
-    (n, d) = ([0], [1])
-    
-    for i in range(1, N + 1):
-        (n, d) = addSum(n, d, [1], dec2bin(i))
-        
-    return (bin2dec(n), bin2dec(d))
-'''
 
 def addSum(n1, d1, n2, d2):
     N = add(mult(n1, d2), mult(n2, d1))
@@ -434,42 +369,19 @@ def reduceFraction(N, D):
     
     return (N1, D1)
 
-'''
-def main():
-    moreInput = True
-    while moreInput:
-        print("Which option would you like to choose? (1, 2, 3, or 4)")
-        print("1. A^B - C^D")
-        print("2. A^B / C^D (will return the quotient and remainder)")
-        print("3. 1 + 1/2 + 1/3 + ... + 1/A")
-        print("4. Quit")
-        selection = input("Your selection: ")
 
-        if selection == "1":
-            problem1()
-        elif selection == "2":
-            problem2()
-        elif selection == "3":
-            problem3()
-        elif selection == "4":
-            moreInput = False
-        else:
-            print("Unknown input.")
-
-main()
-'''
 # for all problems
-def randomGenerator(n, k):
-    # assume n = k
+def randomGenerator(n):
     # if n <= 50
-    # generates a random integer in range [0, 2^1000 - 1]
+    # generates a random integer with n bits
     # documentation doesn't mention how many bits are in the number
-    s = rand___.getrandbits(bin2dec(k) - 2)
-    s = dec2bin(s)
+    d = SystemRandom()
+    s = [d.randrange(2) for i in range(bin2dec(n) - 2)]
+    #s = dec2bin(s)
 
     #trim so random_number has eactly k - 2 bits
-    while len(s) > bin2dec(k) - 2:
-        s = s[1:]
+    #while len(s) > bin2dec(n) - 2:
+     #   s = s[1:]
     #random_number = [s[i] for i in range(len(s)) if len(s) ]
     return [1] + s + [1]
 
@@ -494,9 +406,9 @@ def primality(N):
     # assume N is a reversed bit array
     # pick a number from [1] to N
     # the random number must be in range 1 < random_number < N
-    random_number = randomGenerator(dec2bin(50), dec2bin(50))
+    random_number = randomGenerator(dec2bin(len(N)) )
     while not (compare(random_number, [1]) == 1 and compare(random_number, N) == 2):
-            random_number = randomGenerator(dec2bin(50), dec2bin(50))
+            random_number = randomGenerator(dec2bin(len(N)))
 
     #print(bin2dec(random_number), "^", bin2dec(N) - 1, "mod", bin2dec(N))
     # returning a bool
@@ -504,6 +416,8 @@ def primality(N):
     # delete padding
     #x = [x[i] for i in range(len(x)) if x[i] != 0]
     #print(bin2dec(x), x, [1], compare(x, [1]) == 0)
+    #print(bin2dec(N))
+    #print(modExp(random_number, sub(N, [1]), N), [1])
     if compare(modExp(random_number, sub(N, [1]), N), [1]) == 0:
         return [1]
     return [0]
@@ -517,8 +431,9 @@ def primality2(N, k):
     for i in range(bin2dec(k)):
         #print()
         if compare(primality(N), [0]) == 0:
+            print("No")
             return False
-
+    print("yes")
     return True
         # test all random numbers
         #if random_number is passes the test then return true
@@ -553,16 +468,30 @@ def primality3(N, k):
         
         
     return primality2(N, k)
+def problem1():
+    # N is a binary integer
+    N = dec2bin(int(input("enter a number")))
+
+    # k is a binary confidence integer
+    k = dec2bin(int(input("enter a confidence parameter")))
+    #print(primality(N))
+    return primality3(N, k)
+#print("problem1 test")
+#print(problem1(dec2bin(1000000000039), dec2bin(20)))
+#print()
+#print(problem1(dec2bin(1000000000038), dec2bin(20)))
+#print()
+#exit()
 # problem 2
 def primality4(n, k):
     # n <= 50
-    v = randomGenerator(n, k)
+    v = randomGenerator(n)
     #print("v is :" )
     #print(bin2dec(v))
     # is this correct number of times to check?
-    while( primality3(v, dec2bin(10)) == False) :
+    while( primality3(v, k) == False) :
         #print("result", primality3(v, dec2bin(1)))
-        v = randomGenerator(n, k)
+        v = randomGenerator(n)
         #print("v is :" )
         #print(bin2dec(v))
     return v
@@ -572,10 +501,23 @@ def primality4(n, k):
 # assume decimal input has been collected from user
 
 #primality3(dec2bin(23), dec2bin(1))
+def problem2():
 
+    n = dec2bin(int(input("enter a number")))
 
+    while compare(n, dec2bin(50)) == 1:
+        n = dec2bin(int(input("your number is not <= 50 enter a number")))
 
+    k = dec2bin(int(input("enter a confidence parameter")))
 
+    # n is binary number <= 50
+    # k is same quantity as n
+    return bin2dec(primality4(n, k))
+
+#print("problem2 test")
+#print(bin2dec(primality4(dec2bin(50), dec2bin(50))))
+#print()
+#exit()
 def subW2sCompliment(X, Y, s):
     # has no idea X may be negative
     #print(bin2dec(X), bin2dec(Y))
@@ -682,7 +624,7 @@ def modinv(a, n):
     (x, y, d, s) = egcd(a, n)
     if compare(d, [1]) != 0:
         return []
-    #print(bin2dec(x), bin2dec(s))
+    #print(bin2dec(x), bin2dec(y))
 
     #binaryX = dec2bin(x)
     #binaryY = dec2bin(n)
@@ -703,16 +645,16 @@ def modinv(a, n):
         return remainder
 def findE(k, p, q):
     # e = generate random number with k bits
-    e = randomGenerator(k, k)
+    e = randomGenerator(k)
     while( compare(gcd(e, mult(sub(p, [1]),  sub(q, [1])) ), [1]) != 0 ):
-        e = randomGenerator(k, k)
+        e = randomGenerator(k)
     return e
     # while compare(gcd(e, (p - 1)(q - 1)), [1]) != 0
         # e = generate random number with k bits
     # return e
-def rsaAlgorithm(M):
-    n = dec2bin(50)
-    k = dec2bin(50)
+def rsaAlgorithm(n, k):
+    #n = dec2bin(50)
+    #k = dec2bin(50)
     p = primality4(n, k)
     q = primality4(n, k)
     # stopped working when 50 bit numbers started being used
@@ -725,7 +667,9 @@ def rsaAlgorithm(M):
     #print("N", bin2dec(N))
     #p = dec2bin(5)
     #q = dec2bin(7)
-    e = findE(k, p, q)
+
+    e = findE(n, p, q)
+    #print(len(e), len(p), len(q))
     #print("e", bin2dec(e), "p", bin2dec(p), "q", bin2dec(q))
     #print()
     # claimed non
@@ -739,15 +683,63 @@ def rsaAlgorithm(M):
     #print()
     #(a, b) = divide(mult(e, d), phi)
     #print(bin2dec(e), "*", bin2dec(d), "mod", bin2dec(phi), "=", bin2dec(b))
-    print(bin2dec(M))
+    print("N", bin2dec(N))
+    print("E", bin2dec(e))
+    print("D", bin2dec(d))
+    M = dec2bin(int(input("Please enter a message.  It has to be an integer\n")))
+    #print(bin2dec(M))
+    #exit()
+    # 231, 74
+    #print("message")
+    #print(bin2dec(M))
     #encrypt = M^e mod N
     encrypt = modExp(M, e, N)
+    print("encrypted message")
     print(bin2dec(encrypt))
     #decrypt = encrypt^d mod N
     decrypt = modExp(encrypt, d, N)
+    print("decrypted message")
     print(bin2dec(decrypt))
 
+def problem3():
+    # n is binary number <= 50
+    # k is confidence parameter
+    n = dec2bin(int(input("enter a number")))
+    while compare(n, dec2bin(50)) == 1:
+        n = dec2bin(int(input("your number is not <= 50 enter a number")))
 
+    k = dec2bin(int(input("enter a confidence parameter")))
+    rsaAlgorithm(n, k)
+    #for x in range(1,30):
+     #   rsaAlgorithm(n, k)
+
+#print("egcd test")
+#print(modinv(dec2bin(345), dec2bin(767)))
+#print("problem3 test")
+#problem3()
+def main():
+    moreInput = True
+    while moreInput:
+        print("Which option would you like to choose? (1, 2, 3, or 4)")
+        print("1. faster primality test")
+        print("2. generate an n bit randome number and run problem2 on it")
+        print("3. rsa")
+        print("4. Quit")
+        selection = input("Your selection: ")
+
+        if selection == "1":
+            print(problem1())
+        elif selection == "2":
+            print(problem2())
+        elif selection == "3":
+            problem3()
+        elif selection == "4":
+            moreInput = False
+        else:
+            print("Unknown input.")
+main()
+#rsaAlgorithm(dec2bin(50), dec2bin(10))
+#def main()
 # test inverse problem
 '''
 print(bin2dec(modinv(dec2bin(11), dec2bin(24))))
@@ -766,5 +758,5 @@ print(bin2dec(r3))
 #(q4, r4) = divide(mult(dec2bin(918426559676621), modinv(dec2bin(918426559676621), dec2bin(75771427558771995574901759243))), dec2bin(75771427558771995574901759243))
 #print(bin2dec(r4))
 #findE(dec2bin(50), dec2bin(3), dec2bin(5))
-rsaAlgorithm(dec2bin(1234567890987654321))
+#rsaAlgorithm(dec2bin(1234567890987654321))
 #print(bin2dec(modinv(dec2bin(345), dec2bin(767))))
