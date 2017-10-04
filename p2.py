@@ -646,11 +646,11 @@ def rsaAlgorithm(n, k):
 def problem3():
     # n is binary number <= 50
     # k is confidence parameter
-    n = dec2bin(int(input("enter a number")))
+    n = dec2bin(int(input("enter a number\n")))
     while compare(n, dec2bin(50)) == 1:
-        n = dec2bin(int(input("your number is not <= 50 enter a number")))
+        n = dec2bin(int(input("your number is not <= 50 enter a number\n")))
 
-    k = dec2bin(int(input("enter a confidence parameter")))
+    k = dec2bin(int(input("enter a confidence parameter\n")))
     rsaAlgorithm(n, k)
     #for x in range(1,30):
      #   rsaAlgorithm(n, k)
@@ -664,7 +664,7 @@ def main():
     while moreInput:
         print("Which option would you like to choose? (1, 2, 3, or 4)")
         print("1. faster primality test")
-        print("2. generate an n bit randome number and run problem2 on it")
+        print("2. generate an n bit randome number and test if it is prime")
         print("3. rsa")
         print("4. Quit")
         selection = input("Your selection: ")
@@ -680,25 +680,5 @@ def main():
         else:
             print("Unknown input.")
 main()
-#rsaAlgorithm(dec2bin(50), dec2bin(10))
-#def main()
-# test inverse problem
-'''
-print(bin2dec(modinv(dec2bin(11), dec2bin(24))))
-(q1, r1) = divide(mult(dec2bin(11), modinv(dec2bin(11), dec2bin(24))), dec2bin(24))
-print(bin2dec(r1))
-print()
-#print(subW2sCompliment([0], dec2bin(5)))
-print(bin2dec(modinv(dec2bin(3), dec2bin(40))))
-(q2, r2) = divide(mult(dec2bin(3), modinv(dec2bin(3), dec2bin(40))), dec2bin(40))
-print(bin2dec(r2))
-print()
-print(bin2dec(modinv(dec2bin(31), dec2bin(37))))
-(q3, r3) = divide(mult(dec2bin(31), modinv(dec2bin(31), dec2bin(37))), dec2bin(37))
-print(bin2dec(r3))
-'''
-#(q4, r4) = divide(mult(dec2bin(918426559676621), modinv(dec2bin(918426559676621), dec2bin(75771427558771995574901759243))), dec2bin(75771427558771995574901759243))
-#print(bin2dec(r4))
-#findE(dec2bin(50), dec2bin(3), dec2bin(5))
-#rsaAlgorithm(dec2bin(1234567890987654321))
-#print(bin2dec(modinv(dec2bin(345), dec2bin(767))))
+#instructions for running:
+#python3 p2.py
