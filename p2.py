@@ -377,12 +377,8 @@ def randomGenerator(n):
     # documentation doesn't mention how many bits are in the number
     d = SystemRandom()
     s = [d.randrange(2) for i in range(bin2dec(n) - 2)]
-    #s = dec2bin(s)
 
-    #trim so random_number has eactly k - 2 bits
-    #while len(s) > bin2dec(n) - 2:
-     #   s = s[1:]
-    #random_number = [s[i] for i in range(len(s)) if len(s) ]
+   
     return [1] + s + [1]
 
 # problem 1
@@ -410,14 +406,6 @@ def primality(N):
     while not (compare(random_number, [1]) == 1 and compare(random_number, N) == 2):
             random_number = randomGenerator(dec2bin(len(N)))
 
-    #print(bin2dec(random_number), "^", bin2dec(N) - 1, "mod", bin2dec(N))
-    # returning a bool
-    #x = modExp(random_number, sub(N, [1]), N)
-    # delete padding
-    #x = [x[i] for i in range(len(x)) if x[i] != 0]
-    #print(bin2dec(x), x, [1], compare(x, [1]) == 0)
-    #print(bin2dec(N))
-    #print(modExp(random_number, sub(N, [1]), N), [1])
     if compare(modExp(random_number, sub(N, [1]), N), [1]) == 0:
         return [1]
     return [0]
@@ -433,10 +421,11 @@ def primality2(N, k):
         if compare(primality(N), [0]) == 0:
             print("No")
             return False
+    # test k random numbers
+    #if random_number is passes the test then return true
     print("yes")
     return True
-        # test all random numbers
-        #if random_number is passes the test then return true
+        
 
 def primality3(N, k):
     
@@ -449,10 +438,8 @@ def primality3(N, k):
         binaryN = N
         binaryZero = dec2bin(0)
         binaryOne = dec2bin(1)
-        #print(bin2dec(N), a[i])
+
         (q,r) = divide(binaryN, binaryA)
-        #print(bin2dec(q), bin2dec(r))
-        #print()
         # remainder == 0
         if( compare(r, binaryZero) == 0 ):
             # quotient == 1
@@ -460,9 +447,6 @@ def primality3(N, k):
                 print("yes")
                 return True
             # quotient > 1
-            #if( compare(q, binaryOne ) == 1 ):
-             #   print("no")
-              #  return False;
             print("No")     
             return False
         
@@ -474,31 +458,15 @@ def problem1():
 
     # k is a binary confidence integer
     k = dec2bin(int(input("enter a confidence parameter")))
-    #print(primality(N))
+
     return primality3(N, k)
-#print("problem1 test")
-#print(problem1(dec2bin(1000000000039), dec2bin(20)))
-#print()
-#print(problem1(dec2bin(1000000000038), dec2bin(20)))
-#print()
-#exit()
 # problem 2
 def primality4(n, k):
     # n <= 50
     v = randomGenerator(n)
-    #print("v is :" )
-    #print(bin2dec(v))
-    # is this correct number of times to check?
     while( primality3(v, k) == False) :
-        #print("result", primality3(v, dec2bin(1)))
         v = randomGenerator(n)
-        #print("v is :" )
-        #print(bin2dec(v))
     return v
-    #print("passes")
-
-# primality4()
-# assume decimal input has been collected from user
 
 #primality3(dec2bin(23), dec2bin(1))
 def problem2():
@@ -511,13 +479,9 @@ def problem2():
     k = dec2bin(int(input("enter a confidence parameter")))
 
     # n is binary number <= 50
-    # k is same quantity as n
+    # k is the confidence parameter
     return bin2dec(primality4(n, k))
 
-#print("problem2 test")
-#print(bin2dec(primality4(dec2bin(50), dec2bin(50))))
-#print()
-#exit()
 def subW2sCompliment(X, Y, s):
     # has no idea X may be negative
     #print(bin2dec(X), bin2dec(Y))
@@ -530,7 +494,6 @@ def subW2sCompliment(X, Y, s):
     X1.append(0) #Add one extra bit for the flags for two's complement
     Y1.append(0)
     Y1 = twosComplement(Y1) #Subtract
-    #print(Y1)
     result = add(X1, Y1)
 
     # hack off extra carry bit
@@ -541,9 +504,6 @@ def subW2sCompliment(X, Y, s):
     # (0)' = [1,0]
     # last bit should be sign bit
     s = [negative_bit]
-    #print("in call")
-    #print(bin2dec(X1), bin2dec(twosComplement(Y)), bin2dec(twosComplement(result)), s)
-    #print()
     # converts it out of 2's compliment so the actual binary representation of the value can be used
     return (twosComplement(result), s)
 
@@ -552,32 +512,17 @@ def egcd(a,b):
     # b == 0
     if compare(b, [0]) == 0:
         # default set s to 3
-        #print(1, 0, bin2dec(a), 3)
-        #print()
         return ([1], [0], a, [1,1])
 
     # claims noneType error
     (q, r) = divide(a, b)
 
     (x1, y1, d, s) = egcd(b, r)
-    #print(bin2dec(x1), bin2dec(y1), bin2dec(d), bin2dec(s))
-
-    #print()
-    #print()
 
     # (y1, x1 - floor(a/b), d)
     #x1 - floor(a/b)y1
     (q2, r2) = divide(a, b)
 
-    # if s is 1 then y must be negative
-    #if compare(s, [1]) == 0:
-        # assume y1 is negative
-        #twosComplement(y1.append(0))
-        # assume q2 is positive
-        #q2
-    #print(bin2dec(r2), bin2dec(y1), bin2dec(mult(q2, y1)))
-    #print()
-    #sign = [0]
     #x1 - r2y1
     # multiply doesn't assume wether one of its operands is negative
     # f-loor(a/b) (-x)
@@ -602,10 +547,7 @@ def egcd(a,b):
         (result_from_from_second_term, s1) = subW2sCompliment([0], mult(q2, y1), s)
         positive_sub_part = add(x1, result_from_from_second_term)
 
-        #print(bin2dec(result_from_from_second_term))
-        #print(bin2dec(positive_sub_part))
         (actual_result, s) = subW2sCompliment([0], positive_sub_part, s)
-        #print(bin2dec(actual_result), bin2dec(s))
         new_x = actual_result
         #s = s2
         # subW2sCompliment(0,  add(x1, subW2sCompliment(0, mult(q2, y1))))
